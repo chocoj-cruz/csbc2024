@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 import DataTable from "datatables.net-bs5";
 import { lenguaje } from "../lenguaje";
 
-const formulario = document.getElementById('formularioNovedad');
+const formulario = document.getElementById('formNovedad');
 const tabla = document.getElementById('tablaNovedad');
 const btnGuardar = document.getElementById('btnGuardar');
 const btnModificar = document.getElementById('btnModificar');
@@ -12,11 +12,6 @@ const btnCancelar = document.getElementById('btnCancelar');
 
 
 let contador = 1;
-btnModificar.disabled = true;
-btnModificar.parentElement.style.display = 'none';
-btnCancelar.disabled = true;
-btnCancelar.parentElement.style.display = 'none';
-
 
 const datatable = new DataTable('#tablaNovedad', {
     language: lenguaje,
@@ -59,10 +54,13 @@ const datatable = new DataTable('#tablaNovedad', {
 });
 
 
+btnModificar.parentElement.style.display = 'none';
+btnModificar.disabled = true;
+btnCancelar.parentElement.style.display = 'none';
+btnCancelar.disabled = true;
 
 const guardar = async (e) => {
         e.preventDefault();
-
     if (!validarFormulario(formulario, ['novedad_id'])) {
         Swal.fire({
             title: "Campos vacios",
@@ -83,6 +81,7 @@ const guardar = async (e) => {
         const respuesta = await fetch(url, config);
         const data = await respuesta.json();
         const { codigo, mensaje, detalle } = data;
+
         let icon = 'info';
         if (codigo == 1) {
             icon = 'success';
@@ -166,8 +165,8 @@ const modificar = async (e) => {
 
     try {
         const body = new FormData(formulario);
-        console.loge(formulario)
-        const url = "/csbc/API/novedad/modificar";
+        console.log(formulario)
+        const url = "/csbc2024/API/novedad/modificar";
         const config = {
             method: 'POST',
             body
@@ -244,8 +243,7 @@ const eliminar = async (e) => {
         }
     }
 };
-
-formulario.addEventListener('submit', guardar);
+formulario.addEventListener('submit', guardar)
 btnCancelar.addEventListener('click', cancelar);
 btnModificar.addEventListener('click', modificar);
 datatable.on('click', '.modificar', traerDatos);
