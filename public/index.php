@@ -20,5 +20,4 @@ $router->post('/API/novedad/eliminar', [NovedadController::class, 'eliminarAPI']
 
 
 
-// Comprueba y valida las rutas, que existan y les asigna las funciones del Controlador
 $router->comprobarRutas();

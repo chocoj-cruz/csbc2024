@@ -67,7 +67,7 @@ const guardar = async (e) => {
             text: "Debe llenar todos los campos",
             icon: "info"
         })
-        return
+        return;
     }
 
     try {
@@ -153,7 +153,6 @@ const cancelar = () => {
 
 const modificar = async (e) => {
     e.preventDefault();
-
     if (!validarFormulario(formulario)) {
         Swal.fire({
             title: "Campos vacios",
@@ -171,9 +170,11 @@ const modificar = async (e) => {
             method: 'POST',
             body
         };
-
+        
         const respuesta = await fetch(url, config);
         const data = await respuesta.json();
+        console.log('respuestaModificar',data);
+      
         const { codigo, mensaje, detalle } = data;
         let icon = 'info';
         if (codigo == 1) {
