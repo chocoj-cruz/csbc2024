@@ -52,6 +52,15 @@ class NovedadController
         $novedad1 = mb_strtoupper($_POST['novedad_descripcion'], 'UTF-8');
         $id = filter_var($_POST['novedad_id'], FILTER_SANITIZE_NUMBER_INT);
     
+        $resultadoValidacion = Novedad::validarNovedad();
+        if (!empty($resultadoValidacion)) {
+            http_response_code(400);
+            echo json_encode([
+                'codigo' => 2,
+                'mensaje' => 'La novedad ya existe',
+            ]);
+            return;
+        }
         try {
             $novedad = Novedad::find($id);
             $novedad->novedad_descripcion = $novedad1;
